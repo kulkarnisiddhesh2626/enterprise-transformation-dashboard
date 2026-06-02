@@ -110,10 +110,12 @@ with tab1:
             marker=dict(color='#58a6ff', line=dict(color='#30363d', width=1))
         ))
         fig_bar.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            xaxis=dict(gridcolor='#1f242c', font=dict(color='#8b949e')),
-            yaxis=dict(autorange="reversed", font=dict(color='#8b949e')),
-            margin=dict(l=20, r=20, t=20, b=20), height=350
+            paper_bgcolor='rgba(0,0,0,0)', 
+            plot_bgcolor='rgba(0,0,0,0)',
+            xaxis=dict(gridcolor='#1f242c', tickfont=dict(color='#8b949e')),
+            yaxis=dict(autorange="reversed", tickfont=dict(color='#8b949e')),
+            margin=dict(l=20, r=20, t=20, b=20), 
+            height=350
         )
         st.plotly_chart(fig_bar, use_container_width=True)
         
@@ -130,10 +132,20 @@ with tab1:
             textfont=dict(color='#8b949e')
         ))
         fig_scatter.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            xaxis=dict(title="Implementation Friction Index", gridcolor='#1f242c', font=dict(color='#8b949e')),
-            yaxis=dict(title="Strategic Impact Potential", gridcolor='#1f242c', font=dict(color='#8b949e')),
-            margin=dict(l=20, r=20, t=20, b=20), height=350
+            paper_bgcolor='rgba(0,0,0,0)', 
+            plot_bgcolor='rgba(0,0,0,0)',
+            xaxis=dict(
+                title=dict(text="Implementation Friction Index", font=dict(color='#8b949e')), 
+                gridcolor='#1f242c', 
+                tickfont=dict(color='#8b949e')
+            ),
+            yaxis=dict(
+                title=dict(text="Strategic Impact Potential", font=dict(color='#8b949e')), 
+                gridcolor='#1f242c', 
+                tickfont=dict(color='#8b949e')
+            ),
+            margin=dict(l=20, r=20, t=20, b=20), 
+            height=350
         )
         st.plotly_chart(fig_scatter, use_container_width=True)
 
