@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from ai_engine import get_atk_justification, generate_executive_summary, ask_co_pilot_question
 
 # ----------------------------------------------------
-# 1. PREMIUM LAYOUT & CUSTOM STYLING CONFIGURATION
+# 1. HIGH-CONTRAST LIGHT THEME & CSS INJECTION
 # ----------------------------------------------------
 st.set_page_config(
     page_title="Cognizant Transformation Intelligence Hub",
@@ -13,19 +13,35 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom clean, modern enterprise dark style sheets
+# Premium light corporate stylesheet forcing sharp black text and readable elements
 st.markdown("""
     <style>
-    .main { background-color: #0b0e14; color: #adbac7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-    h1, h2, h3, h4 { color: #ffffff !important; font-weight: 600 !important; }
-    .stTabs [data-baseweb="tab"] { color: #768390 !important; font-size: 1.05rem; padding: 12px 20px; }
-    .stTabs [data-baseweb="tab"][aria-selected="true"] { color: #539bf5 !important; border-bottom-color: #539bf5 !important; font-weight: bold; }
-    .stButton>button { background-color: #1c2128; color: #adbac7; border: 1px solid #373e47; border-radius: 6px; padding: 10px; font-weight: 500; transition: 0.2s ease; }
-    .stButton>button:hover { background-color: #22272e; border-color: #539bf5; color: #ffffff; }
-    div[data-testid="stMetricValue"] { color: #539bf5 !important; font-size: 2.2rem !important; font-weight: 600; }
-    div[data-testid="stMetricLabel"] { color: #768390 !important; font-size: 0.95rem !important; }
-    .stAlert { background-color: #1c2128; border: 1px solid #373e47; border-radius: 8px; color: #adbac7; }
-    .css-1r6slb0 { background-color: #1c2128; border: 1px solid #373e47; border-radius: 8px; padding: 20px; }
+    /* Main body background and font color */
+    .main { background-color: #ffffff; color: #000000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    
+    /* Strict overrides for titles and headers */
+    h1, h2, h3, h4, p, span, li, label { color: #000000 !important; font-weight: 500; }
+    h1, h2, h3 { font-weight: 700 !important; }
+    
+    /* Input element fields text forcing black */
+    .stTextInput input { color: #000000 !important; background-color: #f8f9fa !important; border: 1px solid #ced4da !important; }
+    div[data-baseweb="select"] { color: #000000 !important; background-color: #f8f9fa !important; }
+    
+    /* High-contrast Navigation Tabs */
+    .stTabs [data-baseweb="tab"] { color: #495057 !important; font-size: 1.05rem; padding: 12px 20px; }
+    .stTabs [data-baseweb="tab"][aria-selected="true"] { color: #0056b3 !important; border-bottom-color: #0056b3 !important; font-weight: bold; }
+    
+    /* Enterprise Buttons */
+    .stButton>button { background-color: #f8f9fa; color: #000000 !important; border: 1px solid #ced4da; border-radius: 6px; padding: 10px; font-weight: 600; transition: 0.2s ease; }
+    .stButton>button:hover { background-color: #e2e6ea; border-color: #0056b3; color: #0056b3 !important; }
+    
+    /* Metrics panel configuration */
+    div[data-testid="stMetricValue"] { color: #0056b3 !important; font-size: 2.2rem !important; font-weight: 700; }
+    div[data-testid="stMetricLabel"] { color: #212529 !important; font-size: 0.95rem !important; font-weight: 600; }
+    
+    /* Content alert boxes and info windows */
+    .stAlert { background-color: #f8f9fa; border: 1px solid #0056b3; border-radius: 8px; color: #000000 !important; }
+    .stAlert p { color: #000000 !important; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -70,8 +86,8 @@ reclaimable_capital = gross_capital_loss * engineering_yield
 # Sidebar footprint overview
 st.sidebar.markdown("---")
 st.sidebar.markdown("### Active Session Scope")
-st.sidebar.caption(f"📍 Database Node: `Production_V1`")
-st.sidebar.caption(f"🔒 Network State: `Isolated Secure API`")
+st.sidebar.caption("📍 Database Node: `Production_V1`")
+st.sidebar.caption("🔒 Network State: `Isolated Secure API`")
 
 # ----------------------------------------------------
 # 4. TITLE COMPONENT & TOP HEADER METRICS
@@ -138,14 +154,14 @@ with tabs[1]:
         x=sorted_df["Hours_Wasted"],
         y=sorted_df["Category"],
         orientation='h',
-        marker=dict(color='#316dca', line=dict(color='#444c56', width=1)),
+        marker=dict(color='#0056b3', line=dict(color='#ced4da', width=1)),
         hovertemplate='<b>%{y}</b><br>Hours Wasted: %{x:,}<extra></extra>'
     ))
     fig_bar.update_layout(
         paper_bgcolor='rgba(0,0,0,0)', 
         plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(gridcolor='#22272e', tickfont=dict(color='#768390'), title=dict(text="Annual Hours Spent Inefficiently", font=dict(color='#768390'))),
-        yaxis=dict(autorange="reversed", tickfont=dict(color='#768390')),
+        xaxis=dict(gridcolor='#e9ecef', tickfont=dict(color='#000000'), title=dict(text="Annual Hours Spent Inefficiently", font=dict(color='#000000'))),
+        yaxis=dict(autorange="reversed", tickfont=dict(color='#000000')),
         margin=dict(l=20, r=20, t=10, b=20), 
         height=380
     )
@@ -162,15 +178,15 @@ with tabs[2]:
         mode='markers+text',
         text=df["Category"].apply(lambda x: x if len(x) <= 20 else x[:17] + "..."),
         textposition="top center",
-        marker=dict(size=16, color=df["Complexity_Score"], colorscale='Blues', showscale=True, colorbar=dict(title=dict(text="Complexity", font=dict(color='#768390')), tickfont=dict(color='#768390'))),
-        textfont=dict(color='#adbac7', size=11),
+        marker=dict(size=16, color=df["Complexity_Score"], colorscale='Blues', showscale=True, colorbar=dict(title=dict(text="Complexity", font=dict(color='#000000')), tickfont=dict(color='#000000'))),
+        textfont=dict(color='#000000', size=11),
         hovertemplate='<b>%{text}</b><br>Friction: %{x}<br>Impact: %{y}<extra></extra>'
     ))
     fig_scatter.update_layout(
         paper_bgcolor='rgba(0,0,0,0)', 
         plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(title=dict(text="Implementation Friction Index (Higher = Harder)", font=dict(color='#768390')), gridcolor='#22272e', tickfont=dict(color='#768390')),
-        yaxis=dict(title=dict(text="Strategic Impact Yield Potential", font=dict(color='#768390')), gridcolor='#22272e', tickfont=dict(color='#768390')),
+        xaxis=dict(title=dict(text="Implementation Friction Index (Higher = Harder)", font=dict(color='#000000')), gridcolor='#e9ecef', tickfont=dict(color='#000000')),
+        yaxis=dict(title=dict(text="Strategic Impact Yield Potential", font=dict(color='#000000')), gridcolor='#e9ecef', tickfont=dict(color='#000000')),
         margin=dict(l=20, r=20, t=30, b=20), 
         height=400
     )
