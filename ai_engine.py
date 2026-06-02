@@ -1,21 +1,26 @@
-import time
-import random
+import os
+from groq import Groq
+import streamlit as st
 
 def get_atk_justification(category, architecture):
     """
-    Cloud-safe AI engine for Streamlit deployment.
-    Bypasses the local Ollama requirement to prevent server crashes.
+    Live Cloud AI engine utilizing Groq API and Llama 3.
     """
-    # Simulate the AI "thinking" for a realistic user experience
-    time.sleep(1.5) 
+    # Securely pulls the API key from Streamlit's hidden vault
+    api_key = st.secrets["GROQ_API_KEY"]
+    client = Groq(api_key=api_key)
     
-    # Dynamic, professional business case templates
-    templates = [
-        f"Based on the **{category}** workflow parameters, implementing a **{architecture}** solution will yield an immediate reduction in manual touchpoints. This aligns with enterprise GRC standards and accelerates our digital transformation KPIs while maintaining strict data governance.",
-        
-        f"Transitioning the **{category}** operational process to a **{architecture}** framework removes critical operational bottlenecks. Process mining indicates a high ROI within the first two quarters of deployment, effectively neutralizing the current labor sink.",
-        
-        f"The targeted **{category}** nodes exhibit exceptional automation potential. Deploying **{architecture}** securely within our internal enterprise sandbox will directly offset run-rate financial costs and reallocate human capital to higher-value strategic tasks."
-    ]
+    prompt = f"Write a brief, one-paragraph executive business case justifying why we should automate the operational task '{category}' using a '{architecture}' framework. Focus on ROI and enterprise efficiency."
     
-    return random.choice(templates)
+    try:
+        # Makes the call to the live Llama model
+        response = client.chat.completions.create(
+            model="llama-3.1-8b-instant", 
+            messages=[
+                {"role": "system", "content": "You are an elite enterprise transformation consultant. Keep responses punchy, corporate, and highly professional."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"🚨 API Connection Error: {str(e)}"
